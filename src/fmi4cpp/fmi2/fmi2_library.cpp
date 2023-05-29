@@ -149,7 +149,7 @@ fmi2Component fmi2_library::instantiate(const std::string& instanceName, const f
 }
 
 bool fmi2_library::set_debug_logging(fmi2Component c, bool loggingOn,
-    std::vector<fmi2String> categories)
+    std::span<const fmi2String> categories)
 {
     return update_status_and_return_true_if_ok(
         fmi2SetDebugLogging_(c, loggingOn, categories.size(), categories.data()));
@@ -203,8 +203,8 @@ bool fmi2_library::read_integer(
 
 bool fmi2_library::read_integer(
     fmi2Component c,
-    const std::vector<fmi2ValueReference>& vr,
-    std::vector<fmi2Integer>& ref)
+    std::span<const fmi2ValueReference> vr,
+    std::span<fmi2Integer> ref)
 {
     return update_status_and_return_true_if_ok(
         fmi2GetInteger_(c, vr.data(), vr.size(), ref.data()));
@@ -221,8 +221,8 @@ bool fmi2_library::read_real(
 
 bool fmi2_library::read_real(
     fmi2Component c,
-    const std::vector<fmi2ValueReference>& vr,
-    std::vector<fmi2Real>& ref)
+    std::span<const fmi2ValueReference> vr,
+    std::span<fmi2Real> ref)
 {
     return update_status_and_return_true_if_ok(
         fmi2GetReal_(c, vr.data(), vr.size(), ref.data()));
@@ -239,8 +239,8 @@ bool fmi2_library::read_string(
 
 bool fmi2_library::read_string(
     fmi2Component c,
-    const std::vector<fmi2ValueReference>& vr,
-    std::vector<fmi2String>& ref)
+    std::span<const fmi2ValueReference> vr,
+    std::span<fmi2String> ref)
 {
     return update_status_and_return_true_if_ok(
         fmi2GetString_(c, vr.data(), vr.size(), ref.data()));
@@ -257,8 +257,8 @@ bool fmi2_library::read_boolean(
 
 bool fmi2_library::read_boolean(
     fmi2Component c,
-    const std::vector<fmi2ValueReference>& vr,
-    std::vector<fmi2Boolean>& ref)
+    std::span<const fmi2ValueReference> vr,
+    std::span<fmi2Boolean> ref)
 {
     return update_status_and_return_true_if_ok(
         fmi2GetBoolean_(c, vr.data(), vr.size(), ref.data()));
@@ -275,8 +275,8 @@ bool fmi2_library::write_integer(
 
 bool fmi2_library::write_integer(
     fmi2Component c,
-    const std::vector<fmi2ValueReference>& vr,
-    const std::vector<fmi2Integer>& values)
+    std::span<const fmi2ValueReference> vr,
+    std::span<const fmi2Integer> values)
 {
     return update_status_and_return_true_if_ok(
         fmi2SetInteger_(c, vr.data(), vr.size(), values.data()));
@@ -293,8 +293,8 @@ bool fmi2_library::write_real(
 
 bool fmi2_library::write_real(
     fmi2Component c,
-    const std::vector<fmi2ValueReference>& vr,
-    const std::vector<fmi2Real>& values)
+    std::span<const fmi2ValueReference> vr,
+    std::span<const fmi2Real> values)
 {
     return update_status_and_return_true_if_ok(
         fmi2SetReal_(c, vr.data(), vr.size(), values.data()));
@@ -311,8 +311,8 @@ bool fmi2_library::write_string(
 
 bool fmi2_library::write_string(
     fmi2Component c,
-    const std::vector<fmi2ValueReference>& vr,
-    const std::vector<fmi2String>& values)
+    std::span<const fmi2ValueReference> vr,
+    std::span<const fmi2String> values)
 {
     return update_status_and_return_true_if_ok(
         fmi2SetString_(c, vr.data(), vr.size(), values.data()));
@@ -329,8 +329,8 @@ bool fmi2_library::write_boolean(
 
 bool fmi2_library::write_boolean(
     fmi2Component c,
-    const std::vector<fmi2ValueReference>& vr,
-    const std::vector<fmi2Boolean>& values)
+    std::span<const fmi2ValueReference> vr,
+    std::span<const fmi2Boolean> values)
 {
     return update_status_and_return_true_if_ok(
         fmi2SetBoolean_(c,
@@ -375,7 +375,7 @@ bool fmi4cpp::fmi2::fmi2_library::get_serialized_fmu_state_size(
 bool fmi2_library::serialize_fmu_state(
     fmi2Component c,
     const fmi2FMUstate& state,
-    std::vector<fmi2Byte>& serializedState)
+    std::span<fmi2Byte> serializedState)
 {
     size_t size = 0;
     get_serialized_fmu_state_size(c, state, size);
@@ -390,7 +390,7 @@ bool fmi2_library::serialize_fmu_state(
 bool fmi2_library::de_serialize_fmu_state(
     fmi2Component c,
     fmi2FMUstate& state,
-    const std::vector<fmi2Byte>& serializedState)
+    std::span<const fmi2Byte> serializedState)
 {
     return update_status_and_return_true_if_ok(
         fmi2DeSerializeFMUstate_(c,
@@ -401,10 +401,10 @@ bool fmi2_library::de_serialize_fmu_state(
 
 bool fmi2_library::get_directional_derivative(
     fmi2Component c,
-    const std::vector<fmi2ValueReference>& vUnknownRef,
-    const std::vector<fmi2ValueReference>& vKnownRef,
-    const std::vector<fmi2Real>& dvKnownRef,
-    std::vector<fmi2Real>& dvUnknownRef)
+    std::span<const fmi2ValueReference> vUnknownRef,
+    std::span<const fmi2ValueReference> vKnownRef,
+    std::span<const fmi2Real> dvKnownRef,
+    std::span<fmi2Real> dvUnknownRef)
 {
     return update_status_and_return_true_if_ok(
         fmi2GetDirectionalDerivative_(c,
