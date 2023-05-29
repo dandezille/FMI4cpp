@@ -111,8 +111,6 @@ target_link_libraries(fmi4cpp
 
 if(WIN32)
     target_link_libraries(fmi4cpp PRIVATE "Bcrypt")
-elseif(UNIX)
-    target_link_libraries(fmi4cpp PRIVATE stdc++fs dl)
 endif()
 
 
