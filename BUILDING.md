@@ -12,6 +12,12 @@ Install [conan](https://conan.io/) and run cmake with the option `-DFMI4CPP_USIN
 Linux:~/$ sudo apt-get install libzip-dev libpugixml-dev
 ``` 
 
+##### homebrew
+
+```bash
+brew install cmake libzip pugixml
+``` 
+
 ### Running examples/tests
 
 To build the examples pass `-DFMI4CPP_BUILD_EXAMPLES=ON` to CMake.
