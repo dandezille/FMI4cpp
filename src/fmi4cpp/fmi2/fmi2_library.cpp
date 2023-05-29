@@ -375,7 +375,7 @@ bool fmi4cpp::fmi2::fmi2_library::get_serialized_fmu_state_size(
 bool fmi2_library::serialize_fmu_state(
     fmi2Component c,
     const fmi2FMUstate& state,
-    std::span<fmi2Byte> serializedState)
+    std::vector<fmi2Byte>& serializedState)
 {
     size_t size = 0;
     get_serialized_fmu_state_size(c, state, size);

@@ -98,22 +98,22 @@ public:
         std::span<const fmi2Integer> values);
 
     bool write_real(fmi2Component c, fmi2ValueReference vr, const fmi2Real& value);
-    bool write_real(fmi2Component c, std::span<const fmi2ValueReference> vr, std::span<fmi2Real> values);
+    bool write_real(fmi2Component c, std::span<const fmi2ValueReference> vr, std::span<const fmi2Real> values);
 
     bool write_string(fmi2Component c, fmi2ValueReference vr, fmi2String& value);
     bool write_string(fmi2Component c, std::span<const fmi2ValueReference> vr,
-        std::span<fmi2String> values);
+        std::span<const fmi2String> values);
 
     bool write_boolean(fmi2Component c, fmi2ValueReference vr, const fmi2Boolean& value);
     bool write_boolean(fmi2Component c, std::span<const fmi2ValueReference> vr,
-        std::span<fmi2Boolean> values);
+        std::span<const fmi2Boolean> values);
 
     bool get_fmu_state(fmi2Component c, fmi2FMUstate& state);
     bool set_fmu_state(fmi2Component c, fmi2FMUstate state);
     bool free_fmu_state(fmi2Component c, fmi2FMUstate& state);
 
     bool get_serialized_fmu_state_size(fmi2Component c, fmi2FMUstate state, size_t& size);
-    bool serialize_fmu_state(fmi2Component c, const fmi2FMUstate& state, std::span<fmi2Byte> serializedState);
+    bool serialize_fmu_state(fmi2Component c, const fmi2FMUstate& state, std::vector<fmi2Byte>& serializedState);
     bool de_serialize_fmu_state(fmi2Component c, fmi2FMUstate& state, std::span<const fmi2Byte> serializedState);
 
     bool get_directional_derivative(fmi2Component c,

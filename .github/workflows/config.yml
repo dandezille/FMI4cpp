@@ -51,6 +51,7 @@ jobs:
 
       - name: Configure and build
         run: |
+          conan profile detect
           cmake . -B build -A x64 -DFMI4CPP_USING_CONAN=TRUE -DFMI4CPP_BUILD_TESTS=ON -DFMI4CPP_BUILD_EXAMPLES=ON
           cmake --build build --config Release
         shell: bash
