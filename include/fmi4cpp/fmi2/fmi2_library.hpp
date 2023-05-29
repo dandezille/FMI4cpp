@@ -8,8 +8,8 @@
 
 #include <cstdio>
 #include <cstdlib>
+#include <span>
 #include <string>
-#include <vector>
 
 namespace fmi4cpp::fmi2
 {
@@ -68,7 +68,7 @@ public:
     [[nodiscard]] fmi2String get_version() const;
     [[nodiscard]] fmi2String get_types_platform() const;
 
-    bool set_debug_logging(fmi2Component c, bool loggingOn, std::vector<fmi2String> categories);
+    bool set_debug_logging(fmi2Component c, bool loggingOn, std::span<const fmi2String> categories);
 
     fmi2Component instantiate(const std::string& instanceName, fmi2Type type,
         const std::string& guid, const std::string& resourceLocation,
@@ -82,31 +82,31 @@ public:
     bool terminate(fmi2Component c);
 
     bool read_integer(fmi2Component c, fmi2ValueReference vr, fmi2Integer& ref);
-    bool read_integer(fmi2Component c, const std::vector<fmi2ValueReference>& vr, std::vector<fmi2Integer>& ref);
+    bool read_integer(fmi2Component c, std::span<const fmi2ValueReference> vr, std::span<fmi2Integer> ref);
 
     bool read_real(fmi2Component c, fmi2ValueReference vr, fmi2Real& ref);
-    bool read_real(fmi2Component c, const std::vector<fmi2ValueReference>& vr, std::vector<fmi2Real>& ref);
+    bool read_real(fmi2Component c, std::span<const fmi2ValueReference> vr, std::span<fmi2Real> ref);
 
     bool read_string(fmi2Component c, fmi2ValueReference vr, fmi2String& ref);
-    bool read_string(fmi2Component c, const std::vector<fmi2ValueReference>& vr, std::vector<fmi2String>& ref);
+    bool read_string(fmi2Component c, std::span<const fmi2ValueReference> vr, std::span<fmi2String> ref);
 
     bool read_boolean(fmi2Component c, fmi2ValueReference vr, fmi2Boolean& ref);
-    bool read_boolean(fmi2Component c, const std::vector<fmi2ValueReference>& vr, std::vector<fmi2Boolean>& ref);
+    bool read_boolean(fmi2Component c, std::span<const fmi2ValueReference> vr, std::span<fmi2Boolean> ref);
 
     bool write_integer(fmi2Component c, fmi2ValueReference vr, const fmi2Integer& value);
-    bool write_integer(fmi2Component c, const std::vector<fmi2ValueReference>& vr,
-        const std::vector<fmi2Integer>& values);
+    bool write_integer(fmi2Component c, std::span<const fmi2ValueReference> vr,
+        std::span<const fmi2Integer> values);
 
     bool write_real(fmi2Component c, fmi2ValueReference vr, const fmi2Real& value);
-    bool write_real(fmi2Component c, const std::vector<fmi2ValueReference>& vr, const std::vector<fmi2Real>& values);
+    bool write_real(fmi2Component c, std::span<const fmi2ValueReference> vr, std::span<const fmi2Real> values);
 
     bool write_string(fmi2Component c, fmi2ValueReference vr, fmi2String& value);
-    bool write_string(fmi2Component c, const std::vector<fmi2ValueReference>& vr,
-        const std::vector<fmi2String>& values);
+    bool write_string(fmi2Component c, std::span<const fmi2ValueReference> vr,
+        std::span<const fmi2String> values);
 
     bool write_boolean(fmi2Component c, fmi2ValueReference vr, const fmi2Boolean& value);
-    bool write_boolean(fmi2Component c, const std::vector<fmi2ValueReference>& vr,
-        const std::vector<fmi2Boolean>& values);
+    bool write_boolean(fmi2Component c, std::span<const fmi2ValueReference> vr,
+        std::span<const fmi2Boolean> values);
 
     bool get_fmu_state(fmi2Component c, fmi2FMUstate& state);
     bool set_fmu_state(fmi2Component c, fmi2FMUstate state);
@@ -114,12 +114,12 @@ public:
 
     bool get_serialized_fmu_state_size(fmi2Component c, fmi2FMUstate state, size_t& size);
     bool serialize_fmu_state(fmi2Component c, const fmi2FMUstate& state, std::vector<fmi2Byte>& serializedState);
-    bool de_serialize_fmu_state(fmi2Component c, fmi2FMUstate& state, const std::vector<fmi2Byte>& serializedState);
+    bool de_serialize_fmu_state(fmi2Component c, fmi2FMUstate& state, std::span<const fmi2Byte> serializedState);
 
     bool get_directional_derivative(fmi2Component c,
-        const std::vector<fmi2ValueReference>& vUnknownRef,
-        const std::vector<fmi2ValueReference>& vKnownRef,
-        const std::vector<fmi2Real>& dvKnownRef, std::vector<fmi2Real>& dvUnknownRef);
+        std::span<const fmi2ValueReference> vUnknownRef,
+        std::span<const fmi2ValueReference> vKnownRef,
+        std::span<const fmi2Real> dvKnownRef, std::span<fmi2Real> dvUnknownRef);
 
     void free_instance(fmi2Component c);
 
@@ -128,4 +128,4 @@ public:
 
 } // namespace fmi4cpp::fmi2
 
-#endif //FMI4CPP_FMI2LIBRARY_HPP
+#endif // FMI4CPP_FMI2LIBRARY_HPP
